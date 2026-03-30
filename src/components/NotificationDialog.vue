@@ -275,6 +275,7 @@ export default {
                 SevenIO: "SevenIO",
                 SMSEagle: "SMSEagle",
                 SMSPartner: "SMS Partner",
+                telnyx: "Telnyx",
                 Teltonika: this.$t("Teltonika SMS Gateway"),
                 twilio: "Twilio",
             };
@@ -418,6 +419,10 @@ export default {
                 for (let n of this.$root.notificationList) {
                     if (n.id === notificationID) {
                         this.notification = JSON.parse(n.config);
+
+                        // applyExisting is one time only, but it got saved to database previously. Workaround fix, set it to false here to deal with the problem.
+                        this.notification.applyExisting = false;
+
                         break;
                     }
                 }
