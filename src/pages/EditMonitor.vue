@@ -716,6 +716,21 @@
                                 />
                             </div>
 
+                            <!-- Gamedig Token -->
+                            <div v-if="monitor.type === 'gamedig'" class="my-3">
+                                <label for="gamedig-token" class="form-label">{{ $t("gamedigToken") }}</label>
+                                <input
+                                    id="gamedig-token"
+                                    v-model="monitor.gamedigToken"
+                                    type="password"
+                                    class="form-control"
+                                    :placeholder="$t('gamedigToken')"
+                                />
+                                <div class="form-text">
+                                    {{ $t("gamedigTokenDescription") }}
+                                </div>
+                            </div>
+
                             <!-- SNMP Monitor Type -->
                             <div v-if="monitor.type === 'snmp'" class="my-3">
                                 <label for="snmp_community_string" class="form-label">
@@ -3166,6 +3181,7 @@ const monitorDefaults = {
     kafkaProducerSsl: false,
     kafkaProducerAllowAutoTopicCreation: false,
     gamedigGivenPortOnly: true,
+    gamedigToken: "",
     remote_browser: null,
     screenshot_delay: 0,
     rabbitmqNodes: [],
@@ -3714,7 +3730,7 @@ message HealthCheckResponse {
                 }
             }
 
-            if (newSubtype !== oldSubtype) {
+            if (oldSubtype && newSubtype !== oldSubtype) {
                 if (newSubtype === "ping") {
                     this.monitor.protocol = "ICMP";
                     this.monitor.port = "80";
